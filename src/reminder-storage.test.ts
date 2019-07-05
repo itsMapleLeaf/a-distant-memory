@@ -3,11 +3,11 @@ import { TestReminderStorage } from "./reminder-storage"
 describe("reminder storage", () => {
   it("saves items", async () => {
     const storage = new TestReminderStorage()
-
-    const remindOn = Date.now() + 1000
-
-    const reminder = await storage.save("a thing", "whatever", remindOn)
-
+    const reminder = await storage.save(
+      "a thing",
+      "whatever",
+      Date.now() + 1000
+    )
     const items = await storage.getAll()
     expect(items[0]).toEqual(reminder)
   })
