@@ -2,7 +2,7 @@ import { readFile, writeFile } from "fs-extra"
 import { ReminderData } from "./reminder"
 import { ReminderStorage } from "./reminder-storage"
 
-export class JSONReminderStorage implements ReminderStorage {
+export class JsonReminderStorage implements ReminderStorage {
   constructor(private filePath: string) {}
 
   private async loadData(): Promise<StoredReminders> {

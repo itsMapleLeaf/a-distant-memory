@@ -3,12 +3,12 @@ import { join } from "path"
 import { createBot } from "./bot"
 import { checkReminders } from "./check-reminders"
 import { botToken } from "./env"
-import { JSONReminderStorage } from "./json-reminder-storage"
+import { JsonReminderStorage } from "./json-reminder-storage"
 import { sleep } from "./sleep"
 
 async function main() {
   const adapter = new Adapter({ token: botToken })
-  const storage = new JSONReminderStorage(join(__dirname, "../data.json"))
+  const storage = new JsonReminderStorage(join(__dirname, "../data.json"))
 
   const bot = createBot(adapter, storage)
   await bot.start()
