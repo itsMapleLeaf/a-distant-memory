@@ -6,7 +6,9 @@ import timestring from "timestring"
 import { botToken } from "./env"
 import { ReminderStorageService } from "./storage"
 
-type DiscordClientAdapter = ClientAdapter<Client, Message>
+export type DiscordBot = Bot<Message, Client>
+
+export type DiscordClientAdapter = ClientAdapter<Client, Message>
 
 function createDiscordAdapter() {
   return new Adapter({
