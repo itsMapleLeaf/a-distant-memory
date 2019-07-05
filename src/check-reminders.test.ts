@@ -31,7 +31,7 @@ describe("checkReminders", () => {
     await checkReminders(mockBot as any, storage)
 
     expect(sendFn).toHaveBeenCalledTimes(2)
-    expect(await storage.getAll()).toHaveLength(1)
+    expect(await storage.findAll()).toHaveLength(1)
   })
 
   it("does nothing if there are no reminders", async () => {

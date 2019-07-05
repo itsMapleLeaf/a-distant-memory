@@ -8,7 +8,7 @@ describe("reminder storage", () => {
       "whatever",
       Date.now() + 1000
     )
-    const items = await storage.getAll()
+    const items = await storage.findAll()
     expect(items[0]).toEqual(reminder)
   })
 
@@ -23,14 +23,16 @@ describe("reminder storage", () => {
 
     await storage.remove(reminder.id)
 
-    expect(await storage.getAll()).toHaveLength(0)
+    expect(await storage.findAll()).toHaveLength(0)
   })
 
   it("can find items", async () => {
     const storage = new TestReminderStorage()
     const saved = await storage.save("a thing", "whatever", Date.now() + 1000)
-    const found = await storage.find(r => r.senderId === "whatever")
-    const notFound = await storage.find(r => r.senderId === "doesn't exist")
+    const [found] = await storage.findAll(r => r.senderId === "whatever")
+    const [notFound] = await storage.findAll(
+      r => r.senderId === "doesn't exist"
+    )
 
     expect(saved).toEqual(found)
     expect(notFound).toBeUndefined()

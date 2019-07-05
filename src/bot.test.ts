@@ -37,6 +37,6 @@ describe("bot", () => {
     await flushPromises()
 
     expect(channel.messages).toHaveLength(2) // need to assert that these aren't error responses... somehow
-    expect(await storage.getAll()).toHaveLength(2)
+    expect(await storage.findAll()).toHaveLength(2)
   })
 })

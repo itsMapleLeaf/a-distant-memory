@@ -11,10 +11,7 @@ export type ReminderData = {
 export type ReminderStorage = {
   save(text: string, senderId: string, remindOn: number): Promise<ReminderData>
   remove(id: string): Promise<void>
-  getAll(): Promise<ReminderData[]>
-  find(
-    predicate: (item: ReminderData) => boolean
-  ): Promise<ReminderData | undefined>
+  findAll(predicate?: (item: ReminderData) => boolean): Promise<ReminderData[]>
 }
 
 export class TestReminderStorage implements ReminderStorage {
@@ -38,11 +35,7 @@ export class TestReminderStorage implements ReminderStorage {
     this.items.delete(id)
   }
 
-  async getAll() {
-    return [...this.items.values()]
-  }
-
-  async find(predicate: (item: ReminderData) => boolean) {
-    return [...this.items.values()].find(predicate)
+  async findAll(predicate: (item: ReminderData) => boolean = () => true) {
+    return [...this.items.values()].filter(predicate)
   }
 }
