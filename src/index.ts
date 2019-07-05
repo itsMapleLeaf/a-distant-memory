@@ -1,5 +1,6 @@
-import { Bot, matchPrefixes } from "@enitoni/gears"
+import { Bot, matchPrefixes, matchRegex } from "@enitoni/gears"
 import { Adapter, Command, CommandGroup } from "@enitoni/gears-discordjs"
+import timestring from "timestring"
 import { botToken } from "./env"
 
 const adapter = new Adapter({
@@ -7,10 +8,15 @@ const adapter = new Adapter({
 })
 
 const command = new Command({
-  matcher: matchPrefixes("test"),
+  matcher: matchRegex(/^remind(me)?\s+/i),
   action: context => {
     const { message } = context
-    message.channel.send("Test received!")
+
+    const [, ...args] = message.content.split(" ")
+    const time = args.join(" ")
+    const seconds = timestring(time)
+
+    message.channel.send(`${seconds} seconds`)
   }
 })
 
