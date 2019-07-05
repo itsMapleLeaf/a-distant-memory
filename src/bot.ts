@@ -1,4 +1,4 @@
-import { Bot, ClientAdapter, matchPrefixes, matchRegex } from "@enitoni/gears"
+import { Bot, ClientAdapter, matchPrefixes } from "@enitoni/gears"
 import { Command, CommandGroup } from "@enitoni/gears-discordjs"
 import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
@@ -14,7 +14,7 @@ export function createBot(
   storage: ReminderStorage
 ) {
   const command = new Command({
-    matcher: matchRegex(/^remind(me)?\b/i),
+    matcher: matchPrefixes("remindme ", "remind "),
     action: async ({ message, content }) => {
       try {
         // TODO: perform rate limit check
@@ -35,7 +35,8 @@ export function createBot(
         message.channel.send(
           `alright, i'll message you in ${dist} with the message: "${reminderText}"`
         )
-      } catch {
+      } catch (error) {
+        console.error(error)
         message.channel.send(
           `sorry, i'm having trouble understanding that format.\n` +
             `here's the syntax: !remindme <time>, <message>`
