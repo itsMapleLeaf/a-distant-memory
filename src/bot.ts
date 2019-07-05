@@ -1,23 +1,16 @@
 import { Bot, ClientAdapter, matchPrefixes, matchRegex } from "@enitoni/gears"
-import { Adapter, Command, CommandGroup } from "@enitoni/gears-discordjs"
+import { Command, CommandGroup } from "@enitoni/gears-discordjs"
 import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
 import timestring from "timestring"
-import { botToken } from "./env"
 import { ReminderStorageService } from "./storage"
 
 export type DiscordBot = Bot<Message, Client>
 
 export type DiscordClientAdapter = ClientAdapter<Client, Message>
 
-function createDiscordAdapter() {
-  return new Adapter({
-    token: botToken
-  })
-}
-
 export function createBot(
-  adapter: DiscordClientAdapter = createDiscordAdapter(),
+  adapter: DiscordClientAdapter,
   storage = new ReminderStorageService()
 ) {
   const command = new Command({
