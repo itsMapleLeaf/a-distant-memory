@@ -2,17 +2,12 @@ import { readFile, writeFile } from "fs-extra"
 import { ReminderData } from "./reminder"
 import { ReminderStorage } from "./reminder-storage"
 
+type StoredReminders = {
+  reminders: ReminderData[]
+}
+
 export class JsonReminderStorage implements ReminderStorage {
   constructor(private filePath: string) {}
-
-  private async loadData(): Promise<StoredReminders> {
-    const content = await readFile(this.filePath, "utf-8")
-    return JSON.parse(content)
-  }
-
-  private async saveData(data: StoredReminders) {
-    return writeFile(this.filePath, JSON.stringify(data))
-  }
 
   async save(reminder: ReminderData) {
     const data = await this.loadData()
@@ -31,8 +26,13 @@ export class JsonReminderStorage implements ReminderStorage {
     const data = await this.loadData()
     return data.reminders.filter(predicate)
   }
-}
 
-type StoredReminders = {
-  reminders: ReminderData[]
+  private async loadData(): Promise<StoredReminders> {
+    const content = await readFile(this.filePath, "utf-8")
+    return JSON.parse(content)
+  }
+
+  private async saveData(data: StoredReminders) {
+    return writeFile(this.filePath, JSON.stringify(data))
+  }
 }
