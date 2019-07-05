@@ -5,11 +5,15 @@ import {
   TestDiscordChannel,
   TestDiscordMessage
 } from "./mocks"
+import { TestReminderStorage } from "./reminder-storage"
 import { flushPromises } from "./test-utils"
 
 async function createTestBot() {
   const client = new TestClient()
-  const bot = createBot(new TestAdapter(client) as any)
+  const bot = createBot(
+    new TestAdapter(client) as any,
+    new TestReminderStorage()
+  )
   await bot.start()
   return { client, bot }
 }

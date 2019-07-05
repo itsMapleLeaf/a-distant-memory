@@ -1,6 +1,6 @@
 import uuid from "uuid/v4"
 
-type ReminderData = {
+export type ReminderData = {
   id: string
   text: string
   senderId: string
@@ -8,7 +8,13 @@ type ReminderData = {
   remindOn: number
 }
 
-export class ReminderStorageService {
+export type ReminderStorage = {
+  save(text: string, senderId: string, remindOn: number): Promise<void>
+  remove(id: string): Promise<void>
+  getAll(): Promise<ReminderData[]>
+}
+
+export class TestReminderStorage implements ReminderStorage {
   private items = new Map<string, ReminderData>()
 
   async save(text: string, senderId: string, remindOn: number) {

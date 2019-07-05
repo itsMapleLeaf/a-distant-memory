@@ -3,7 +3,7 @@ import { Command, CommandGroup } from "@enitoni/gears-discordjs"
 import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
 import timestring from "timestring"
-import { ReminderStorageService } from "./storage"
+import { ReminderStorage } from "./reminder-storage"
 
 export type DiscordBot = Bot<Message, Client>
 
@@ -11,7 +11,7 @@ export type DiscordClientAdapter = ClientAdapter<Client, Message>
 
 export function createBot(
   adapter: DiscordClientAdapter,
-  storage = new ReminderStorageService()
+  storage: ReminderStorage
 ) {
   const command = new Command({
     matcher: matchRegex(/^remind(me)?\b/i),

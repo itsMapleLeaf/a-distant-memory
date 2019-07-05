@@ -1,8 +1,8 @@
-import { ReminderStorageService } from "./storage"
+import { TestReminderStorage } from "./reminder-storage"
 
 describe("reminder storage", () => {
   it("saves items", async () => {
-    const storage = new ReminderStorageService()
+    const storage = new TestReminderStorage()
 
     const remindOn = Date.now() + 1000
 

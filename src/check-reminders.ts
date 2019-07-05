@@ -1,9 +1,9 @@
 import { DiscordBot } from "./bot"
-import { ReminderStorageService } from "./storage"
+import { TestReminderStorage } from "./reminder-storage"
 
 export async function checkReminders(
   bot: DiscordBot,
-  storage: ReminderStorageService
+  storage: TestReminderStorage
 ) {
   for (const reminder of await storage.getAll()) {
     if (Date.now() >= reminder.remindOn) {

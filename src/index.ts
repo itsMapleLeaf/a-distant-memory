@@ -2,12 +2,12 @@ import { Adapter } from "@enitoni/gears-discordjs"
 import { createBot } from "./bot"
 import { checkReminders } from "./check-reminders"
 import { botToken } from "./env"
+import { TestReminderStorage } from "./reminder-storage"
 import { sleep } from "./sleep"
-import { ReminderStorageService } from "./storage"
 
 async function main() {
   const adapter = new Adapter({ token: botToken })
-  const storage = new ReminderStorageService()
+  const storage = new TestReminderStorage()
 
   const bot = createBot(adapter, storage)
   await bot.start()
