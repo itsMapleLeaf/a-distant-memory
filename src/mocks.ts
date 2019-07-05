@@ -15,6 +15,10 @@ export class TestDiscordChannel {
 }
 
 export class TestDiscordMessage {
+  author = {
+    id: "dshajdklashjkl"
+  }
+
   constructor(
     public content: string,
     public channel = new TestDiscordChannel()
