@@ -3,8 +3,8 @@ import { Command, CommandGroup } from "@enitoni/gears-discordjs"
 import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
 import timestring from "timestring"
-import { createReminder } from "./reminder"
-import { ReminderStorage } from "./reminder-storage"
+import { createReminder } from "../reminder/reminder"
+import { ReminderStorage } from "../reminder/reminder-storage"
 
 export type DiscordBot = Bot<Message, Client>
 

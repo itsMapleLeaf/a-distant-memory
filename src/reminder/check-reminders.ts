@@ -1,4 +1,4 @@
-import { DiscordBot } from "./bot"
+import { DiscordBot } from "../bot/bot"
 import { ReminderData } from "./reminder"
 import { ReminderStorage } from "./reminder-storage"
 

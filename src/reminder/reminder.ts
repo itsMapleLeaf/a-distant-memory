@@ -12,7 +12,7 @@ export function createReminder(
   text: string,
   senderId: string,
   timeFromNow: number
-) {
+): ReminderData {
   const now = Date.now()
   return {
     id: uuid(),

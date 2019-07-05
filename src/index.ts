@@ -1,10 +1,10 @@
 import { Adapter } from "@enitoni/gears-discordjs"
 import { join } from "path"
-import { createBot } from "./bot"
-import { checkReminders } from "./check-reminders"
+import { createBot } from "./bot/bot"
 import { botToken } from "./env"
-import { JsonReminderStorage } from "./json-reminder-storage"
-import { sleep } from "./sleep"
+import { sleep } from "./helpers/sleep"
+import { checkReminders } from "./reminder/check-reminders"
+import { JsonReminderStorage } from "./reminder/json-reminder-storage"
 
 async function main() {
   const adapter = new Adapter({ token: botToken })

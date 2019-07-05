@@ -1,3 +1,5 @@
+import { flushPromises } from "../helpers/flush-promises"
+import { TestReminderStorage } from "../reminder/test-reminder-storage"
 import { createBot } from "./bot"
 import {
   TestAdapter,
@@ -5,8 +7,6 @@ import {
   TestDiscordChannel,
   TestDiscordMessage
 } from "./mocks"
-import { TestReminderStorage } from "./test-reminder-storage"
-import { flushPromises } from "./test-utils"
 
 async function createTestBot() {
   const client = new TestClient()
