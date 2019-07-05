@@ -10,38 +10,33 @@ import { flushPromises } from "./test-utils"
 
 async function createTestBot() {
   const client = new TestClient()
-  const bot = createBot(
-    new TestAdapter(client) as any,
-    new TestReminderStorage()
-  )
+  const storage = new TestReminderStorage()
+
+  const bot = createBot(new TestAdapter(client) as any, storage)
   await bot.start()
-  return { client, bot }
+
+  return { client, bot, storage }
 }
 
 describe("bot", () => {
-  it.skip("accepts !remind or !remindme", async () => {
-    const { client } = await createTestBot()
+  it("saves reminders with specific prefixes", async () => {
+    const { client, storage } = await createTestBot()
 
     const channel = new TestDiscordChannel()
-    client.sendMessage(new TestDiscordMessage("!remind 1 year", channel))
-    client.sendMessage(new TestDiscordMessage("!remindme 1 year", channel))
+
+    const messages = [
+      "!remindme 1 minute, do the thing",
+      "!remind 1 minute, do the thing",
+      "!remindwhat 1 minute, do the thing" // this one should get ignored
+    ]
+
+    for (const content of messages) {
+      client.sendMessage(new TestDiscordMessage(content, channel))
+    }
 
     await flushPromises()
 
-    expect(channel.messages).toHaveLength(2)
-  })
-
-  it.skip("ignores other !remind prefixes", async () => {
-    const { client } = await createTestBot()
-
-    const channel = new TestDiscordChannel()
-    client.sendMessage(
-      new TestDiscordMessage("!reminddjklsfjklsdf 1 year", channel)
-    )
-    client.sendMessage(new TestDiscordMessage("!remindwat 1 year", channel))
-
-    await flushPromises()
-
-    expect(channel.messages).toHaveLength(0)
+    expect(channel.messages).toHaveLength(2) // need to assert that these aren't error responses... somehow
+    expect(await storage.getAll()).toHaveLength(2)
   })
 })
