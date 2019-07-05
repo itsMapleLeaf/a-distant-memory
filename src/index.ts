@@ -3,7 +3,7 @@ import { join } from "path"
 import { createBot } from "./bot"
 import { checkReminders } from "./check-reminders"
 import { botToken } from "./env"
-import { JSONReminderStorage } from "./reminder-storage"
+import { JSONReminderStorage } from "./json-reminder-storage"
 import { sleep } from "./sleep"
 
 async function main() {

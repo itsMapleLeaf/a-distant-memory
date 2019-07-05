@@ -1,6 +1,6 @@
 import { checkReminders } from "./check-reminders"
 import { createReminder } from "./reminder"
-import { TestReminderStorage } from "./reminder-storage"
+import { TestReminderStorage } from "./test-reminder-storage"
 
 function setup() {
   const sendFn = jest.fn()

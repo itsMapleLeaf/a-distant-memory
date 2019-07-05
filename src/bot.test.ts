@@ -5,7 +5,7 @@ import {
   TestDiscordChannel,
   TestDiscordMessage
 } from "./mocks"
-import { TestReminderStorage } from "./reminder-storage"
+import { TestReminderStorage } from "./test-reminder-storage"
 import { flushPromises } from "./test-utils"
 
 async function createTestBot() {

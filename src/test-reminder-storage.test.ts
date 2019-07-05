@@ -1,7 +1,7 @@
 import { createReminder } from "./reminder"
-import { TestReminderStorage } from "./reminder-storage"
+import { TestReminderStorage } from "./test-reminder-storage"
 
-describe("reminder storage", () => {
+describe("test reminder storage", () => {
   it("saves items", async () => {
     const storage = new TestReminderStorage()
     const reminder = await storage.save(
