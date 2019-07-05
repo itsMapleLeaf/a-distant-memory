@@ -6,19 +6,33 @@ describe("reminder storage", () => {
 
     const remindOn = Date.now() + 1000
 
-    await storage.save("a thing", "whatever", remindOn)
+    const reminder = await storage.save("a thing", "whatever", remindOn)
 
     const items = await storage.getAll()
-    expect(items[0]).toEqual({
-      id: expect.any(String),
-      text: "a thing",
-      senderId: "whatever",
-      createdAt: expect.any(Number),
-      remindOn
-    })
+    expect(items[0]).toEqual(reminder)
   })
 
-  it.todo("removes items")
+  it("removes items", async () => {
+    const storage = new TestReminderStorage()
 
-  it.todo("can find items")
+    const reminder = await storage.save(
+      "a thing",
+      "whatever",
+      Date.now() + 1000
+    )
+
+    await storage.remove(reminder.id)
+
+    expect(await storage.getAll()).toHaveLength(0)
+  })
+
+  it("can find items", async () => {
+    const storage = new TestReminderStorage()
+    const saved = await storage.save("a thing", "whatever", Date.now() + 1000)
+    const found = await storage.find(r => r.senderId === "whatever")
+    const notFound = await storage.find(r => r.senderId === "doesn't exist")
+
+    expect(saved).toEqual(found)
+    expect(notFound).toBeUndefined()
+  })
 })

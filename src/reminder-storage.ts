@@ -9,24 +9,29 @@ export type ReminderData = {
 }
 
 export type ReminderStorage = {
-  save(text: string, senderId: string, remindOn: number): Promise<void>
+  save(text: string, senderId: string, remindOn: number): Promise<ReminderData>
   remove(id: string): Promise<void>
   getAll(): Promise<ReminderData[]>
+  find(
+    predicate: (item: ReminderData) => boolean
+  ): Promise<ReminderData | undefined>
 }
 
 export class TestReminderStorage implements ReminderStorage {
   private items = new Map<string, ReminderData>()
 
   async save(text: string, senderId: string, remindOn: number) {
-    const id = uuid()
-
-    this.items.set(id, {
-      id,
+    const reminder = {
+      id: uuid(),
       text,
       senderId,
       createdAt: Date.now(),
       remindOn
-    })
+    }
+
+    this.items.set(reminder.id, reminder)
+
+    return reminder
   }
 
   async remove(id: string) {
@@ -35,5 +40,9 @@ export class TestReminderStorage implements ReminderStorage {
 
   async getAll() {
     return [...this.items.values()]
+  }
+
+  async find(predicate: (item: ReminderData) => boolean) {
+    return [...this.items.values()].find(predicate)
   }
 }
