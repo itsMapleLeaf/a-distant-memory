@@ -1,11 +1,9 @@
 import { Bot, matchPrefixes } from "@enitoni/gears"
 import { Adapter, Command, CommandGroup } from "@enitoni/gears-discordjs"
-import dotenv from "dotenv"
-
-dotenv.config()
+import { botToken } from "./env"
 
 const adapter = new Adapter({
-  token: process.env.BOT_TOKEN!
+  token: botToken
 })
 
 const command = new Command({
