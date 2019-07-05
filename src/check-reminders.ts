@@ -1,5 +1,6 @@
 import { DiscordBot } from "./bot"
-import { ReminderData, ReminderStorage } from "./reminder-storage"
+import { ReminderData } from "./reminder"
+import { ReminderStorage } from "./reminder-storage"
 
 export async function checkReminders(
   bot: DiscordBot,

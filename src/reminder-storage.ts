@@ -1,16 +1,8 @@
 import { readFile, writeFile } from "fs-extra"
-import uuid from "uuid/v4"
-
-export type ReminderData = {
-  id: string
-  text: string
-  senderId: string
-  createdAt: number
-  remindOn: number
-}
+import { ReminderData } from "./reminder"
 
 export type ReminderStorage = {
-  save(text: string, senderId: string, remindOn: number): Promise<ReminderData>
+  save(reminder: ReminderData): Promise<ReminderData>
   remove(id: string): Promise<void>
   findAll(predicate?: (item: ReminderData) => boolean): Promise<ReminderData[]>
 }
@@ -18,17 +10,8 @@ export type ReminderStorage = {
 export class TestReminderStorage implements ReminderStorage {
   private items = new Map<string, ReminderData>()
 
-  async save(text: string, senderId: string, remindOn: number) {
-    const reminder = {
-      id: uuid(),
-      text,
-      senderId,
-      createdAt: Date.now(),
-      remindOn
-    }
-
+  async save(reminder: ReminderData) {
     this.items.set(reminder.id, reminder)
-
     return reminder
   }
 
@@ -57,19 +40,10 @@ export class JSONReminderStorage implements ReminderStorage {
     return writeFile(this.filePath, JSON.stringify(data))
   }
 
-  async save(text: string, senderId: string, remindOn: number) {
-    const reminder = {
-      id: uuid(),
-      text,
-      senderId,
-      createdAt: Date.now(),
-      remindOn
-    }
-
+  async save(reminder: ReminderData) {
     const data = await this.loadData()
     data.reminders.push(reminder)
     await this.saveData(data)
-
     return reminder
   }
 

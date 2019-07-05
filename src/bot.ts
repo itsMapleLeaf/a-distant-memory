@@ -3,6 +3,7 @@ import { Command, CommandGroup } from "@enitoni/gears-discordjs"
 import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
 import timestring from "timestring"
+import { createReminder } from "./reminder"
 import { ReminderStorage } from "./reminder-storage"
 
 export type DiscordBot = Bot<Message, Client>
@@ -21,24 +22,28 @@ export function createBot(
 
         const [time, ...reminderTextRaw] = content.split(",")
         const reminderText = reminderTextRaw.join(",").trim()
-
         if (!reminderText) {
           throw new Error("no reminder text")
         }
 
-        const ms = timestring(time, "ms")
-        const remindOn = Date.now() + ms
+        const timeFromNow = timestring(time, "ms")
 
-        if (remindOn >= Number.MAX_SAFE_INTEGER) {
+        const reminder = createReminder(
+          reminderText,
+          message.author.id,
+          timeFromNow
+        )
+
+        if (reminder.remindOn >= Number.MAX_SAFE_INTEGER) {
           message.channel.send(
             `that's way too much time! enter in something lower, thanks ♥`
           )
           return
         }
 
-        const dist = distanceInWordsToNow(remindOn)
+        const dist = distanceInWordsToNow(reminder.remindOn)
 
-        await storage.save(reminderText, message.author.id, remindOn)
+        await storage.save(reminder)
 
         message.channel.send(
           `alright, i'll message you in ${dist} with the message: "${reminderText}"`

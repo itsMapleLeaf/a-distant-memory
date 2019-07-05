@@ -1,4 +1,5 @@
 import { checkReminders } from "./check-reminders"
+import { createReminder } from "./reminder"
 import { TestReminderStorage } from "./reminder-storage"
 
 function setup() {
@@ -24,9 +25,9 @@ describe("checkReminders", () => {
   it("sends and removes reminders that have met their time", async () => {
     const { storage, mockUser, mockBot, sendFn } = setup()
 
-    storage.save("do the thing", mockUser.id, Date.now() - 1000)
-    storage.save("do the thing", mockUser.id, Date.now() - 1000)
-    storage.save("do the thing", mockUser.id, Date.now() + 30000)
+    await storage.save(createReminder("do the thing", mockUser.id, -1000))
+    await storage.save(createReminder("do the thing", mockUser.id, -1000))
+    await storage.save(createReminder("do the thing", mockUser.id, 30000))
 
     await checkReminders(mockBot as any, storage)
 
