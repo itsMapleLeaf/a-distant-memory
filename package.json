@@ -7,7 +7,8 @@
     "compile": "tsc",
     "start": "yarn compile && node out/index",
     "dev": "ts-node-dev --no-notify src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
   },
   "author": "kingdaro",
   "license": "MIT",
