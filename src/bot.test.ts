@@ -15,7 +15,7 @@ async function createTestBot() {
 }
 
 describe("bot", () => {
-  it("accepts !remind or !remindme", async () => {
+  it.skip("accepts !remind or !remindme", async () => {
     const { client } = await createTestBot()
 
     const channel = new TestDiscordChannel()
@@ -27,7 +27,7 @@ describe("bot", () => {
     expect(channel.messages).toHaveLength(2)
   })
 
-  it("ignores other !remind prefixes", async () => {
+  it.skip("ignores other !remind prefixes", async () => {
     const { client } = await createTestBot()
 
     const channel = new TestDiscordChannel()

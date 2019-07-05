@@ -4,6 +4,7 @@ import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
 import timestring from "timestring"
 import { botToken } from "./env"
+import { ReminderStorageService } from "./storage"
 
 type DiscordClientAdapter = ClientAdapter<Client, Message>
 
@@ -14,11 +15,12 @@ function createDiscordAdapter() {
 }
 
 export function createBot(
-  adapter: DiscordClientAdapter = createDiscordAdapter()
+  adapter: DiscordClientAdapter = createDiscordAdapter(),
+  storage = new ReminderStorageService()
 ) {
   const command = new Command({
     matcher: matchRegex(/^remind(me)?\b/i),
-    action: ({ message, content }) => {
+    action: async ({ message, content }) => {
       try {
         const [time, ...reminderTextRaw] = content.split(",")
         const reminderText = reminderTextRaw.join(",").trim()
@@ -28,7 +30,10 @@ export function createBot(
         }
 
         const ms = timestring(time, "ms")
-        const dist = distanceInWordsToNow(Date.now() + ms)
+        const remindOn = Date.now() + ms
+        const dist = distanceInWordsToNow(remindOn)
+
+        await storage.save(message.author.id, remindOn)
 
         message.channel.send(
           `alright, i'll message you in ${dist} with the message: "${reminderText}"`
