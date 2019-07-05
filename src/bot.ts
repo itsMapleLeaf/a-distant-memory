@@ -28,6 +28,14 @@ export function createBot(
 
         const ms = timestring(time, "ms")
         const remindOn = Date.now() + ms
+
+        if (remindOn >= Number.MAX_SAFE_INTEGER) {
+          message.channel.send(
+            `that's way too much time! enter in something lower, thanks ♥`
+          )
+          return
+        }
+
         const dist = distanceInWordsToNow(remindOn)
 
         await storage.save(reminderText, message.author.id, remindOn)
