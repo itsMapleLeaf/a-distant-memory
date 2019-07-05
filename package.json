@@ -15,7 +15,8 @@
     "@enitoni/gears": "^2.4.2",
     "@enitoni/gears-discordjs": "^1.2.0",
     "discord.js": "^11.5.1",
-    "dotenv": "^8.0.0"
+    "dotenv": "^8.0.0",
+    "timestring": "^6.0.0"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
