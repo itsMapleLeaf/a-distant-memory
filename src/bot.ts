@@ -35,7 +35,7 @@ export function createBot(
         const remindOn = Date.now() + ms
         const dist = distanceInWordsToNow(remindOn)
 
-        await storage.save(message.author.id, remindOn)
+        await storage.save(reminderText, message.author.id, remindOn)
 
         message.channel.send(
           `alright, i'll message you in ${dist} with the message: "${reminderText}"`

@@ -2,6 +2,7 @@ import uuid from "uuid/v4"
 
 type ReminderData = {
   id: string
+  text: string
   senderId: string
   createdAt: number
   remindOn: number
@@ -10,11 +11,12 @@ type ReminderData = {
 export class ReminderStorageService {
   private items = new Map<string, ReminderData>()
 
-  async save(senderId: string, remindOn: number) {
+  async save(text: string, senderId: string, remindOn: number) {
     const id = uuid()
 
     this.items.set(id, {
       id,
+      text,
       senderId,
       createdAt: Date.now(),
       remindOn
