@@ -1,11 +1,10 @@
-import * as dateFns from "date-fns"
 import { ReminderStorageService } from "./storage"
 
 describe("reminder storage", () => {
   it("saves items", async () => {
     const storage = new ReminderStorageService()
 
-    const remindOn = dateFns.addSeconds(Date.now(), 1).toISOString()
+    const remindOn = Date.now() + 1000
 
     await storage.save("whatever", remindOn)
 
@@ -13,7 +12,7 @@ describe("reminder storage", () => {
     expect(items[0]).toEqual({
       id: expect.any(String),
       senderId: "whatever",
-      createdAt: expect.any(String),
+      createdAt: expect.any(Number),
       remindOn
     })
   })
