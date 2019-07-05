@@ -22,6 +22,8 @@ export function createBot(
     matcher: matchRegex(/^remind(me)?\b/i),
     action: async ({ message, content }) => {
       try {
+        // TODO: perform rate limit check
+
         const [time, ...reminderTextRaw] = content.split(",")
         const reminderText = reminderTextRaw.join(",").trim()
 
