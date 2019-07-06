@@ -6,11 +6,10 @@ import { createReminder, ReminderData } from "./reminder"
 
 export async function handleReminderCommand(
   storage: Storage<ReminderData>,
-  message: Message
+  message: Message,
+  content: string
 ) {
   try {
-    const content = message.content.replace(/^!remind(me)?\s+/, "")
-
     // TODO: limit reminders per user
 
     const [time, ...reminderTextRaw] = content.split(",")
