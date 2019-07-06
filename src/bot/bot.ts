@@ -1,31 +1,17 @@
-import { Client, Message } from "discord.js"
-import { ReminderData } from "../reminder/reminder"
-import { handleReminderCommand } from "../reminder/reminder-command"
-import { Storage } from "../storage/storage"
+import { Client } from "discord.js"
+import { Command, createCommandPrefixRegex, runCommand } from "./command"
 
-export function createBot(storage: Storage<ReminderData>) {
+export function createBot(commands: Command[]) {
   const client = new Client()
 
-  const commands = [
-    {
-      prefix: "remindme",
-      handler: (message: Message, content: string) =>
-        handleReminderCommand(storage, message, content)
-    }
-  ]
-
-  const createPrefixRegex = (prefix: string) => new RegExp(`^!${prefix}\\s+`)
-
-  client.on("message", message => {
+  client.on("message", async message => {
     const command = commands.find(command => {
-      const prefixRegex = createPrefixRegex(command.prefix)
+      const prefixRegex = createCommandPrefixRegex(command.prefix)
       return prefixRegex.test(message.content)
     })
 
     if (command) {
-      const prefixRegex = createPrefixRegex(command.prefix)
-      const content = message.content.replace(prefixRegex, "")
-      command.handler(message, content)
+      await runCommand(command, message)
     }
   })
 
