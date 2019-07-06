@@ -1,5 +1,6 @@
 import { Client } from "discord.js"
 import { Storage } from "../storage/storage"
+import { createReminderEmbed } from "./create-reminder-embed"
 import { ReminderData } from "./reminder"
 
 export async function checkReminders(
@@ -13,6 +14,6 @@ export async function checkReminders(
     await storage.remove(reminder.id)
 
     const sender = await client.fetchUser(reminder.senderId)
-    sender.send(`hi! here's your reminder: "${reminder.text}"`)
+    sender.send(`hi! here's your reminder:`, createReminderEmbed(reminder))
   }
 }

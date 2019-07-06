@@ -1,7 +1,7 @@
-import { distanceInWordsToNow } from "date-fns"
 import { Message } from "discord.js"
 import timestring from "timestring"
 import { Storage } from "../storage/storage"
+import { createReminderEmbed } from "./create-reminder-embed"
 import { createReminder, ReminderData } from "./reminder"
 
 export async function handleReminderCommand(
@@ -34,13 +34,9 @@ export async function handleReminderCommand(
       return
     }
 
-    const dist = distanceInWordsToNow(reminder.remindOn)
-
     await storage.save(reminder)
 
-    message.channel.send(
-      `alright, i'll message you in ${dist} with the message: "${reminderText}"`
-    )
+    message.channel.send(`reminder registered!`, createReminderEmbed(reminder))
   } catch (error) {
     console.error(error)
     message.channel.send(
