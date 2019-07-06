@@ -1,9 +1,9 @@
-import { createReminder } from "./reminder"
-import { TestReminderStorage } from "./test-reminder-storage"
+import { createReminder, ReminderData } from "../reminder/reminder"
+import { TestStorage } from "./test-storage"
 
 describe("test reminder storage", () => {
   it("saves items", async () => {
-    const storage = new TestReminderStorage()
+    const storage = new TestStorage()
     const reminder = await storage.save(
       createReminder("a thing", "whatever", 1000)
     )
@@ -12,7 +12,7 @@ describe("test reminder storage", () => {
   })
 
   it("removes items", async () => {
-    const storage = new TestReminderStorage()
+    const storage = new TestStorage()
 
     const reminder = await storage.save(
       createReminder("a thing", "whatever", 1000)
@@ -24,7 +24,7 @@ describe("test reminder storage", () => {
   })
 
   it("can find items", async () => {
-    const storage = new TestReminderStorage()
+    const storage = new TestStorage<ReminderData>()
     const saved = await storage.save(
       createReminder("a thing", "whatever", 1000)
     )

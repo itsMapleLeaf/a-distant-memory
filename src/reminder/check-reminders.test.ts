@@ -1,6 +1,6 @@
+import { TestStorage } from "../storage/test-storage"
 import { checkReminders } from "./check-reminders"
-import { createReminder } from "./reminder"
-import { TestReminderStorage } from "./test-reminder-storage"
+import { createReminder, ReminderData } from "./reminder"
 
 function setup() {
   const sendFn = jest.fn()
@@ -16,7 +16,7 @@ function setup() {
     }
   }
 
-  const storage = new TestReminderStorage()
+  const storage = new TestStorage<ReminderData>()
 
   return { storage, mockUser, mockBot, sendFn }
 }

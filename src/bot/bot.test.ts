@@ -1,5 +1,6 @@
 import { flushPromises } from "../helpers/flush-promises"
-import { TestReminderStorage } from "../reminder/test-reminder-storage"
+import { ReminderData } from "../reminder/reminder"
+import { TestStorage } from "../storage/test-storage"
 import { createBot } from "./bot"
 import {
   TestAdapter,
@@ -10,7 +11,7 @@ import {
 
 async function createTestBot() {
   const client = new TestClient()
-  const storage = new TestReminderStorage()
+  const storage = new TestStorage<ReminderData>()
 
   const bot = createBot(new TestAdapter(client) as any, storage)
   await bot.start()
