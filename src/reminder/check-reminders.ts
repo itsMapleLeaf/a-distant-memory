@@ -1,9 +1,9 @@
-import { DiscordBot } from "../bot/bot"
+import { Client } from "discord.js"
 import { Storage } from "../storage/storage"
 import { ReminderData } from "./reminder"
 
 export async function checkReminders(
-  bot: DiscordBot,
+  client: Client,
   storage: Storage<ReminderData>
 ) {
   const shouldRemind = (reminder: ReminderData) =>
@@ -12,7 +12,7 @@ export async function checkReminders(
   for (const reminder of await storage.findAll(shouldRemind)) {
     await storage.remove(reminder.id)
 
-    const sender = await bot.client.fetchUser(reminder.senderId)
+    const sender = await client.fetchUser(reminder.senderId)
     sender.send(`hi! here's your reminder: "${reminder.text}"`)
   }
 }

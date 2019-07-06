@@ -139,20 +139,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@enitoni/gears-discordjs@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@enitoni/gears-discordjs/-/gears-discordjs-1.2.0.tgz#1b50ca1ca20227428c5c53383f77e7f93ece7c70"
-  integrity sha512-tZV7Ya+eMy63QGZx1yDx5NwBDIl4OgkV0coFXKIaS7Z6aLVtvd9jilr/snPc2LQsW/hOWC6GhpCQfm/64VYecw==
-  dependencies:
-    chalk "^2.4.2"
-
-"@enitoni/gears@^2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@enitoni/gears/-/gears-2.4.2.tgz#0aab9cea014ba6d1851325086151ffb579f45e27"
-  integrity sha512-4F2QJt/VXYxqbWdJGZH1TwHaFjVTnJuvADPT7mH+GDiCtzqo4muIqn8QiJSgdlfErnBqVQGY9sjq05FxfbGfUQ==
-  dependencies:
-    decko "^1.2.0"
-
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -956,11 +942,6 @@ decamelize@^1.1.2, decamelize@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
-
-decko@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/decko/-/decko-1.2.0.tgz#fd43c735e967b8013306884a56fbe665996b6817"
-  integrity sha1-/UPHNelnuAEzBohKVvvmZZlraBc=
 
 decode-uri-component@^0.2.0:
   version "0.2.0"

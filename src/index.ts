@@ -1,23 +1,21 @@
-import { Adapter } from "@enitoni/gears-discordjs"
 import { join } from "path"
 import { createBot } from "./bot/bot"
 import { botToken } from "./env"
 import { sleep } from "./helpers/sleep"
 import { checkReminders } from "./reminder/check-reminders"
-import { JsonStorage } from "./storage/json-storage"
 import { ReminderData } from "./reminder/reminder"
+import { JsonStorage } from "./storage/json-storage"
 
 async function main() {
-  const adapter = new Adapter({ token: botToken })
   const storage = new JsonStorage<ReminderData>(join(__dirname, "../data.json"))
 
-  const bot = createBot(adapter, storage)
-  await bot.start()
+  const client = createBot(storage)
+  await client.login(botToken)
 
   console.log("bot is runnin")
 
   while (true) {
-    await checkReminders(bot, storage)
+    await checkReminders(client, storage)
     await sleep(1000)
   }
 }

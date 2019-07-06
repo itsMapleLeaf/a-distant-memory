@@ -10,35 +10,33 @@ function setup() {
     send: sendFn
   }
 
-  const mockBot = {
-    client: {
-      fetchUser: async () => mockUser
-    }
+  const mockClient = {
+    fetchUser: async () => mockUser
   }
 
   const storage = new TestStorage<ReminderData>()
 
-  return { storage, mockUser, mockBot, sendFn }
+  return { storage, mockUser, mockClient, sendFn }
 }
 
 describe("checkReminders", () => {
   it("sends and removes reminders that have met their time", async () => {
-    const { storage, mockUser, mockBot, sendFn } = setup()
+    const { storage, mockUser, mockClient, sendFn } = setup()
 
     await storage.save(createReminder("do the thing", mockUser.id, -1000))
     await storage.save(createReminder("do the thing", mockUser.id, -1000))
     await storage.save(createReminder("do the thing", mockUser.id, 30000))
 
-    await checkReminders(mockBot as any, storage)
+    await checkReminders(mockClient as any, storage)
 
     expect(sendFn).toHaveBeenCalledTimes(2)
     expect(await storage.findAll()).toHaveLength(1)
   })
 
   it("does nothing if there are no reminders", async () => {
-    const { storage, mockBot, sendFn } = setup()
+    const { storage, mockClient, sendFn } = setup()
 
-    await checkReminders(mockBot as any, storage)
+    await checkReminders(mockClient as any, storage)
 
     expect(sendFn).not.toHaveBeenCalled()
   })

@@ -1,31 +1,20 @@
-import { Bot, ClientAdapter, matchPrefixes } from "@enitoni/gears"
-import { CommandGroup } from "@enitoni/gears-discordjs"
-import { Client, Message } from "discord.js"
+import { Client } from "discord.js"
 import { ReminderData } from "../reminder/reminder"
-import { createReminderCommand } from "../reminder/reminder-command"
+import { handleReminderCommand } from "../reminder/reminder-command"
 import { Storage } from "../storage/storage"
 
-export type DiscordBot = Bot<Message, Client>
+export function createBot(storage: Storage<ReminderData>) {
+  const client = new Client()
 
-export type DiscordClientAdapter = ClientAdapter<Client, Message>
-
-export function createBot(
-  adapter: DiscordClientAdapter,
-  storage: Storage<ReminderData>
-) {
-  const group = new CommandGroup({
-    matcher: matchPrefixes("!"),
-    commands: [createReminderCommand(storage)]
+  client.on("message", message => {
+    if (message.content.match(/^!remind(me)?\s+/)) {
+      handleReminderCommand(storage, message)
+    }
   })
 
-  const bot = new Bot({
-    adapter,
-    group
+  client.on("error", error => {
+    console.error(error) // TODO: use an actual log file
   })
 
-  bot.on("error", error => {
-    console.error(error) // use an actual log file
-  })
-
-  return bot
+  return client
 }
