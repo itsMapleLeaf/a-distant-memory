@@ -24,7 +24,7 @@ export function createBot(
   })
 
   bot.on("error", error => {
-    console.error(error)
+    console.error(error) // use an actual log file
   })
 
   return bot
