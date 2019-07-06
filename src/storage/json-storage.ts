@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs-extra"
+import { readFile, stat, writeFile } from "fs-extra"
 import { Storage } from "./storage"
 
 type StoredData<T> = {
@@ -27,11 +27,20 @@ export class JsonStorage<T extends { id: string }> implements Storage<T> {
   }
 
   private async loadData(): Promise<StoredData<T>> {
+    const stats = await stat(this.filePath)
+    if (stats.isDirectory()) {
+      throw new Error(`${this.filePath} is a directory, cannot use for storage`)
+    }
+
+    if (!stats.isFile()) {
+      await this.saveData({ items: [] })
+    }
+
     const content = await readFile(this.filePath, "utf-8")
     return JSON.parse(content)
   }
 
   private async saveData(data: StoredData<T>) {
-    return writeFile(this.filePath, JSON.stringify(data))
+    await writeFile(this.filePath, JSON.stringify(data))
   }
 }
