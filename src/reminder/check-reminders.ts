@@ -1,10 +1,10 @@
 import { DiscordBot } from "../bot/bot"
+import { Storage } from "../storage/storage"
 import { ReminderData } from "./reminder"
-import { ReminderStorage } from "./reminder-storage"
 
 export async function checkReminders(
   bot: DiscordBot,
-  storage: ReminderStorage
+  storage: Storage<ReminderData>
 ) {
   const shouldRemind = (reminder: ReminderData) =>
     Date.now() >= reminder.remindOn

@@ -3,8 +3,8 @@ import { Command, CommandGroup } from "@enitoni/gears-discordjs"
 import { distanceInWordsToNow } from "date-fns"
 import { Client, Message } from "discord.js"
 import timestring from "timestring"
-import { createReminder } from "../reminder/reminder"
-import { ReminderStorage } from "../reminder/reminder-storage"
+import { createReminder, ReminderData } from "../reminder/reminder"
+import { Storage } from "../storage/storage"
 
 export type DiscordBot = Bot<Message, Client>
 
@@ -12,7 +12,7 @@ export type DiscordClientAdapter = ClientAdapter<Client, Message>
 
 export function createBot(
   adapter: DiscordClientAdapter,
-  storage: ReminderStorage
+  storage: Storage<ReminderData>
 ) {
   const command = new Command({
     matcher: matchPrefixes("remindme ", "remind "),

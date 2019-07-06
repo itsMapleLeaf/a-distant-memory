@@ -1,12 +1,12 @@
 import { readFile, writeFile } from "fs-extra"
+import { Storage } from "../storage/storage"
 import { ReminderData } from "./reminder"
-import { ReminderStorage } from "./reminder-storage"
 
 type StoredReminders = {
   reminders: ReminderData[]
 }
 
-export class JsonReminderStorage implements ReminderStorage {
+export class JsonReminderStorage implements Storage<ReminderData> {
   constructor(private filePath: string) {}
 
   async save(reminder: ReminderData) {

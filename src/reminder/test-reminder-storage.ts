@@ -1,7 +1,7 @@
+import { Storage } from "../storage/storage"
 import { ReminderData } from "./reminder"
-import { ReminderStorage } from "./reminder-storage"
 
-export class TestReminderStorage implements ReminderStorage {
+export class TestReminderStorage implements Storage<ReminderData> {
   private items = new Map<string, ReminderData>()
 
   async save(reminder: ReminderData) {
