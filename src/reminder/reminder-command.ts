@@ -8,12 +8,15 @@ export function createReminderCommand(storage: Storage<ReminderData>): Command {
   return {
     prefix: "remindme",
     handler: async (message: Message, content: string) => {
-      const result = await saveReminder(content, message.author.id)
-      message.channel.send(...result.message)
+      const result = saveReminder(content, message.author.id)
 
-      if (result.type === "success") {
-        storage.save(result.reminder)
-      }
+      const sendMessagePromise = message.channel.send(...result.message)
+
+      const storagePromise =
+        result.type === "success" ? storage.save(result.reminder) : undefined
+
+      await sendMessagePromise
+      await storagePromise
     },
   }
 }

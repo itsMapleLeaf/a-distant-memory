@@ -15,10 +15,10 @@ export type SaveReminderResult =
       message: (string | RichEmbed)[]
     }
 
-export async function saveReminder(
+export function saveReminder(
   content: string,
   authorId: string,
-): Promise<SaveReminderResult> {
+): SaveReminderResult {
   try {
     // TODO: limit reminders per user
 
