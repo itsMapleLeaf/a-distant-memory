@@ -6,6 +6,7 @@ import { botToken } from "./env"
 import { sleep } from "./helpers/sleep"
 import { checkReminders } from "./reminder/check-reminders"
 import { ReminderData } from "./reminder/reminder"
+import { createReminderCommand } from "./reminder/reminder-command"
 import { JsonStorage } from "./storage/json-storage"
 
 async function main() {
@@ -17,6 +18,7 @@ async function main() {
 
   const group = new CommandGroupBuilder<Message, Client>()
     .match(matchPrefixes("!"))
+    .setCommands(createReminderCommand(storage))
     .done()
 
   const bot = new Bot({
