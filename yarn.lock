@@ -139,6 +139,18 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@enitoni/gears-discordjs@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@enitoni/gears-discordjs/-/gears-discordjs-1.2.0.tgz#1b50ca1ca20227428c5c53383f77e7f93ece7c70"
+  integrity sha512-tZV7Ya+eMy63QGZx1yDx5NwBDIl4OgkV0coFXKIaS7Z6aLVtvd9jilr/snPc2LQsW/hOWC6GhpCQfm/64VYecw==
+  dependencies:
+    chalk "^2.4.2"
+
+"@enitoni/gears@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@enitoni/gears/-/gears-3.0.2.tgz#4859c0154f2179cdf23ddeb1bb9d60b877b7369c"
+  integrity sha512-XezVUmlLjDCvtoeNA7uDPYUPNvY3JBjNazrrYFbbD3Ay/M9AB0/CuUqdcfh5NUFLTH+ZG943R9JxmxwGm2saiQ==
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"

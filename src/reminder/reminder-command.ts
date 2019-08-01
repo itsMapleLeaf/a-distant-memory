@@ -1,13 +1,13 @@
-import { Message } from "discord.js"
-import { Command } from "../bot/command"
+import { CommandBuilder, matchPrefixes } from "@enitoni/gears"
+import { Client, Message } from "discord.js"
 import { Storage } from "../storage/storage"
 import { ReminderData } from "./reminder"
 import { saveReminder } from "./save-reminder"
 
-export function createReminderCommand(storage: Storage<ReminderData>): Command {
-  return {
-    prefix: "remindme",
-    handler: async (message: Message, content: string) => {
+export function createReminderCommand(storage: Storage<ReminderData>) {
+  return new CommandBuilder<Message, Client>()
+    .match(matchPrefixes("remindme "))
+    .use(async ({ message, content }) => {
       const result = saveReminder(content, message.author.id)
 
       const sendMessagePromise = message.channel.send(...result.message)
@@ -17,6 +17,6 @@ export function createReminderCommand(storage: Storage<ReminderData>): Command {
 
       await sendMessagePromise
       await storagePromise
-    },
-  }
+    })
+    .done()
 }

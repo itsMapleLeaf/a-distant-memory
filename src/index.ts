@@ -1,23 +1,35 @@
+import { Bot, CommandGroupBuilder, matchPrefixes } from "@enitoni/gears"
+import { Adapter } from "@enitoni/gears-discordjs"
+import { Client, Message } from "discord.js"
 import { join } from "path"
-import { createBot } from "./bot/bot"
 import { botToken } from "./env"
 import { sleep } from "./helpers/sleep"
 import { checkReminders } from "./reminder/check-reminders"
 import { ReminderData } from "./reminder/reminder"
-import { createReminderCommand } from "./reminder/reminder-command"
 import { JsonStorage } from "./storage/json-storage"
 
 async function main() {
   const storage = new JsonStorage<ReminderData>(join(__dirname, "../data.json"))
 
-  const client = createBot([createReminderCommand(storage)])
+  const adapter = new Adapter({
+    token: botToken,
+  })
 
-  await client.login(botToken)
+  const group = new CommandGroupBuilder<Message, Client>()
+    .match(matchPrefixes("!"))
+    .done()
+
+  const bot = new Bot({
+    adapter: adapter as any, // until the discordjs bindings are updated
+    commands: [group],
+  })
+
+  await bot.start()
 
   console.log("bot is runnin")
 
   while (true) {
-    await checkReminders(client, storage)
+    await checkReminders(bot.client, storage)
     await sleep(1000)
   }
 }
