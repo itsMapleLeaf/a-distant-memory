@@ -1,12 +1,9 @@
 import { Client } from "discord.js"
-import { Storage } from "../storage/storage"
 import { createReminderEmbed } from "./create-reminder-embed"
 import { ReminderData } from "./reminder"
+import { ReminderStorage } from "./reminder-storage"
 
-export async function checkReminders(
-  client: Client,
-  storage: Storage<ReminderData>
-) {
+export async function checkReminders(client: Client, storage: ReminderStorage) {
   const shouldRemind = (reminder: ReminderData) =>
     Date.now() >= reminder.remindOn
 
