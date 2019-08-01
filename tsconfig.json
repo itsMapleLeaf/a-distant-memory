@@ -5,6 +5,7 @@
     "module": "commonjs",
     "outDir": "out",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   }
 }
