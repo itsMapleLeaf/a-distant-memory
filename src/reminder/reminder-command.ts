@@ -1,10 +1,10 @@
-import { CommandBuilder, matchPrefixes } from "@enitoni/gears"
-import { Client, Message } from "discord.js"
+import { matchPrefixes } from "@enitoni/gears"
+import { CommandBuilder } from "@enitoni/gears-discordjs"
 import { ReminderStorage } from "./reminder-storage"
 import { saveReminder } from "./save-reminder"
 
 export function createReminderCommand(storage: ReminderStorage) {
-  return new CommandBuilder<Message, Client>()
+  return new CommandBuilder()
     .match(matchPrefixes("remindme "))
     .use(async ({ message, content }) => {
       const result = saveReminder(content, message.author.id)

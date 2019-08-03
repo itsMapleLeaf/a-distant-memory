@@ -1,6 +1,5 @@
-import { Bot, CommandGroupBuilder, matchPrefixes } from "@enitoni/gears"
-import { Adapter } from "@enitoni/gears-discordjs"
-import { Client, Message } from "discord.js"
+import { Bot, matchPrefixes } from "@enitoni/gears"
+import { Adapter, CommandGroupBuilder } from "@enitoni/gears-discordjs"
 import { join } from "path"
 import { botToken } from "./env"
 import { sleep } from "./helpers/sleep"
@@ -16,13 +15,13 @@ async function main() {
     token: botToken,
   })
 
-  const group = new CommandGroupBuilder<Message, Client>()
+  const group = new CommandGroupBuilder()
     .match(matchPrefixes("!"))
     .setCommands(createReminderCommand(storage))
     .done()
 
   const bot = new Bot({
-    adapter: adapter as any, // until the discordjs bindings are updated
+    adapter,
     commands: [group],
   })
 
