@@ -26,10 +26,7 @@ export function saveReminder(
     const reminderText = reminderTextRaw.join(",").trim()
 
     if (!reminderText) {
-      return {
-        type: "error",
-        message: [messages.noReminderText],
-      }
+      return { type: "error", message: [messages.noReminderText] }
     }
 
     const timeFromNow = timestring(time, "ms")
@@ -37,10 +34,7 @@ export function saveReminder(
     const reminder = createReminder(reminderText, authorId, timeFromNow)
 
     if (reminder.remindOn >= Number.MAX_SAFE_INTEGER) {
-      return {
-        type: "error",
-        message: [messages.tooMuchTime],
-      }
+      return { type: "error", message: [messages.tooMuchTime] }
     }
 
     return {
@@ -49,9 +43,6 @@ export function saveReminder(
       reminder,
     }
   } catch (error) {
-    return {
-      type: "error",
-      message: [messages.invalidFormat],
-    }
+    return { type: "error", message: [messages.invalidFormat] }
   }
 }
